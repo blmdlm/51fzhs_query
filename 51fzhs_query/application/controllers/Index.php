@@ -26,4 +26,21 @@ class IndexController extends Yaf_Controller_Abstract {
 		//4. render by Yaf, 如果这里返回FALSE, Yaf将不会调用自动视图引擎Render模板
         return TRUE;
 	}
+	
+	/**
+	 * 获取所有的用户信息
+	 */
+	public function getAllUserInfoAction(){
+		//实例化model对象
+		$model=new IndexModel();
+		//调用model查询方法
+		$users=$model->getAllUserInfo();
+		//返回json数据
+		echo  json_encode($users);
+		//yaf将不会调用自动视图引擎
+		return FALSE;
+	}
+	
+	
+	
 }

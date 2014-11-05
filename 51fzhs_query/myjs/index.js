@@ -11,21 +11,22 @@ Ext.onReady(function(){
 
 
 //user info store start 
-Ext.create('Ext.data.Store',{
-    storeId:'UserInfo',
-    fields:[ 'name','phone','qq','email','class','school','college','major','province','area','education'],
-    data:{
-        'items':[
-        { 'name':'葛京','phone':'15399482749','qq':'2439054131','email':'gjblmdlm@sina.com','class':'308','school':'野寨中学','college':'西北工业大学','major':'软件工程','province':'陕西省','area':'西北','education':'本科'} ,   
 
-        ],
-    },
+
+
+
+
+var UserInfo=Ext.create('Ext.data.Store',{
+   
+    fields:[ 'name','phone','qq','email','class','school','college','major','province','area','education','graduation'],
+    autoLoad:true,
     proxy:{
-        type:'memory',
+        type:'ajax',
+        url:'/index/getalluserinfo',
         reader:{
             type:'json',
-            root:'items'
-        }
+            root:'users'
+        },
     },
 });
 
@@ -101,20 +102,21 @@ Ext.create('Ext.Panel', {
     },//检索项结束
     {//结果显示开始
         xtype: 'grid',
-        title: 'result',
+        title: '信息',
         width: '100%',
-        store:Ext.data.StoreManager.lookup('UserInfo'),
+        store:UserInfo,
         columns:[
             {header:'姓名',dataIndex:'name'},
             {header:'手机',dataIndex:'phone'},
             {header:'QQ',dataIndex:'qq'},
             {header:'邮箱',dataIndex:'email'},
             {header:'高中',dataIndex:'school'},
+            {header:'届别',dataIndex:'graduation'},
             {header:'班级',dataIndex:'class'},
             {header:'大学',dataIndex:'college'},
             {header:'专业',dataIndex:'major'},
             {header:'学历',dataIndex:'education'},
-            {header:'所在省',dataIndex:'province'},
+            {header:'所在地',dataIndex:'province'},
             {header:'区域',dataIndex:'area'},
         ],
         flex: 8
